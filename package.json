@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-circom",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "types": "bindings/node",
   "scripts": {
@@ -10,8 +10,8 @@
     "test": "node --test bindings/node/*_test.js"
   },
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
+  "description": "Circom grammar for tree-sitter",
   "dependencies": {
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.0"
@@ -30,6 +30,7 @@
   },
   "files": [
     "grammar.js",
+    "tree-sitter.json",
     "binding.gyp",
     "prebuilds/**",
     "bindings/node/*",
@@ -47,5 +48,9 @@
         "queries/highlights.scm"
       ]
     }
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GraphideHQ/tree-sitter-circom.git"
+  }
 }
