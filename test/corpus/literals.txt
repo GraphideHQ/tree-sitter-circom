@@ -1,0 +1,107 @@
+================================================================================
+Decimal and hexadecimal literals
+================================================================================
+template T() {
+    var a = 0;
+    var b = 21888242871839275222246405745257274988543549408174483217463093882234567890;
+    var c = 0x0;
+    var d = 0xDEADbeef01;
+    var e = 007;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal))))))
+
+================================================================================
+Hex literal needs a digit
+:error
+================================================================================
+template T() {
+    var a = 0x;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Upper-case hex prefix is not a literal
+:error
+================================================================================
+template T() {
+    var a = 0XFF;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Identifiers with dollar and underscore prefixes
+================================================================================
+template T() {
+    var $a_1 = 1;
+    var _b = 2;
+    var __c$ = $a_1;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (identifier))))))
+
+================================================================================
+Placeholder
+================================================================================
+template T() {
+    _ <== A()(x);
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (expression_statement
+        (assignment_expression
+          left: (placeholder)
+          right: (call_expression
+            function: (identifier)
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (identifier)))))))))

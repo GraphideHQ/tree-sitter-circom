@@ -1,0 +1,316 @@
+================================================================================
+Signal declarations with direction, tags and dimensions
+================================================================================
+template T(n) {
+    signal a;
+    signal input b[n][2];
+    signal output {binary, maxbit} c;
+    input signal d;
+    output signal {binary} e[n];
+    signal f <== a * b[0][0], g, h[2] <== [a, a];
+    signal i <-- a, j[n] <-- 1;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (template_body
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (identifier)
+            (int_literal))))
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        tags: (signal_tags
+          (identifier)
+          (identifier))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        tags: (signal_tags
+          (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (identifier))))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (identifier)
+            right: (array_access_expression
+              base: (array_access_expression
+                base: (identifier)
+                index: (int_literal))
+              index: (int_literal))))
+        declarator: (signal_declarator
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (int_literal))
+          value: (array_expression
+            (identifier)
+            (identifier))))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (identifier))
+          value: (int_literal))))))
+
+================================================================================
+Unconstrained and plain signal declarators cannot mix
+:error
+================================================================================
+template T() {
+    signal a, b <-- 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Signal declared with plain assignment
+:error
+================================================================================
+template T() {
+    signal a = 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Tuple declarations
+================================================================================
+template T() {
+    signal (a, b[2]) <== Other(1)(x, y);
+    signal output (c, d) <-- f();
+    signal (e, f);
+    var (i, j[2]) = (1, [2, 3]);
+    var (k) = 1;
+    component (m, n);
+    component (p, q) = Two()(x);
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (int_literal)))
+        value: (call_expression
+          function: (identifier)
+          arguments: (argument_list
+            argument: (int_literal))
+          inputs: (anonymous_inputs
+            (argument_list
+              argument: (identifier)
+              argument: (identifier)))))
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        declarator: (signal_declarator
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier))
+        value: (call_expression
+          function: (identifier)))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier))
+        declarator: (variable_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (int_literal)))
+        value: (tuple_expression
+          (int_literal)
+          (array_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier))
+        value: (int_literal))
+      (component_declaration_statement
+        declarator: (component_declarator
+          name: (identifier))
+        declarator: (component_declarator
+          name: (identifier)))
+      (component_declaration_statement
+        declarator: (component_declarator
+          name: (identifier))
+        declarator: (component_declarator
+          name: (identifier))
+        value: (call_expression
+          function: (identifier)
+          inputs: (anonymous_inputs
+            (argument_list
+              argument: (identifier))))))))
+
+================================================================================
+Variable declarations
+================================================================================
+template T() {
+    var a;
+    var b = 1, c[2][3], d = [[1, 2, 3], [4, 5, 6]];
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal))
+        declarator: (variable_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (int_literal)
+            (int_literal)))
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (array_expression
+            (array_expression
+              (int_literal)
+              (int_literal)
+              (int_literal))
+            (array_expression
+              (int_literal)
+              (int_literal)
+              (int_literal))))))))
+
+================================================================================
+Component declarations
+================================================================================
+template T(n) {
+    component a;
+    component b[n], c = Num2Bits(8);
+    component d = parallel Mul();
+    b[0] = Num2Bits(n);
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (template_body
+      (component_declaration_statement
+        declarator: (component_declarator
+          name: (identifier)))
+      (component_declaration_statement
+        declarator: (component_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (identifier)))
+        declarator: (component_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              argument: (int_literal)))))
+      (component_declaration_statement
+        declarator: (component_declarator
+          name: (identifier)
+          value: (parallel_expression
+            expression: (call_expression
+              function: (identifier)))))
+      (expression_statement
+        (assignment_expression
+          left: (array_access_expression
+            base: (identifier)
+            index: (int_literal))
+          right: (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              argument: (identifier))))))))
+
+================================================================================
+Component main inside a template
+:error
+================================================================================
+template T() {
+    component main = A();
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Keyword used as an identifier
+:error
+================================================================================
+template T() {
+    var bus = 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Identifiers that start with a keyword
+================================================================================
+template T() {
+    signal input in;
+    var signals = 1;
+    var mainx = 2;
+    var logs = 3;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        declarator: (signal_declarator
+          name: (identifier)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal))))))

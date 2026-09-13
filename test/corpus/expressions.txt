@@ -4,31 +4,31 @@ Variable Declaration With Unary Expression
 template test(){
   var tmp = -1;
   var tmp = ~1;
-  var tmp = +1;
   var tmp = !1;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
-            (identifier)
-            (unary_expression
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (unary_expression
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (unary_expression
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (unary_expression
-              (int_literal))))))
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (unary_expression
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (unary_expression
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (unary_expression
+            (int_literal)))))))
+
 =====================================
 Variable Declaration With Binary Expression
 =====================================
@@ -55,111 +55,133 @@ template test(){
   var tmp = 2 != 2;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal)))
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (int_literal)
-              (int_literal))))))
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (int_literal)
+            (int_literal)))))))
+
 =====================================
 Variable Declaration With Ternary Expression
 =====================================
@@ -167,19 +189,22 @@ template test(){
   var tmp = 1 ? 5 > 3 : 0;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
-            (identifier)
-            (ternary_expression
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (ternary_expression
+            (int_literal)
+            (binary_expression
               (int_literal)
-              (binary_expression
-                (int_literal)
-                (int_literal))
-              (int_literal))))))
+              (int_literal))
+            (int_literal)))))))
+
 =====================================
 Variable Declaration With Member Expression
 =====================================
@@ -187,16 +212,19 @@ template qwer(){
   var tmp = qwer.in;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (member_expression
             (identifier)
-            (member_expression
-              (identifier)
-              (property_identifier))))))
+            (property_identifier)))))))
+
 =====================================
 Variable Declaration With Array Access Expression
 =====================================
@@ -204,16 +232,19 @@ template test(){
   var tmp = qwer[0];
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (array_access_expression
             (identifier)
-            (array_access_expression
-              (identifier)
-              (int_literal))))))
+            (int_literal)))))))
+
 =====================================
 Variable Declaration With Member Array Access Expression
 =====================================
@@ -221,18 +252,21 @@ template test(){
   var tmp = qwer.in[0];
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
-            (identifier)
-            (array_access_expression
-              (member_expression
-                (identifier)
-                (property_identifier))
-              (int_literal))))))
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (array_access_expression
+            (member_expression
+              (identifier)
+              (property_identifier))
+            (int_literal)))))))
+
 =====================================
 Variable Declaration With Member Double Array Access Expression
 =====================================
@@ -240,22 +274,25 @@ template test(N){
   var tmp = qwer.in[0][N];
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list
-          (parameter
-            (identifier)))
-        (template_body
-          (variable_declaration_statement
-            (identifier)
+  (template_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)))
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (array_access_expression
             (array_access_expression
-              (array_access_expression
-                (member_expression
-                  (identifier)
-                  (property_identifier))
-                (int_literal))
-              (identifier))))))
+              (member_expression
+                (identifier)
+                (property_identifier))
+              (int_literal))
+            (identifier)))))))
+
 =====================================
 Variable Declaration With parenthesized Expression
 =====================================
@@ -263,17 +300,20 @@ template test(){
   var tmp = (2 + 2);
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
-            (identifier)
-            (parenthesized_expression
-              (binary_expression
-                (int_literal)
-                (int_literal)))))))
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (parenthesized_expression
+            (binary_expression
+              (int_literal)
+              (int_literal))))))))
+
 =====================================
 Variable Declaration With Complex Expression
 =====================================
@@ -281,32 +321,35 @@ template test(){
   var tmp = ((2 + 2) * t.in + 1 % q.in[0]) << 2;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
-            (identifier)
-            (binary_expression
-              (parenthesized_expression
-                (array_access_expression
-                  (member_expression
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (binary_expression
+            (parenthesized_expression
+              (binary_expression
+                (binary_expression
+                  (parenthesized_expression
                     (binary_expression
-                      (member_expression
-                        (binary_expression
-                          (parenthesized_expression
-                            (binary_expression
-                              (int_literal)
-                              (int_literal)))
-                          (identifier))
-                        (property_identifier))
-                      (binary_expression
-                        (int_literal)
-                        (identifier)))
-                    (property_identifier))
-                  (int_literal)))
-              (int_literal))))))
+                      (int_literal)
+                      (int_literal)))
+                  (member_expression
+                    (identifier)
+                    (property_identifier)))
+                (binary_expression
+                  (int_literal)
+                  (array_access_expression
+                    (member_expression
+                      (identifier)
+                      (property_identifier))
+                    (int_literal)))))
+            (int_literal)))))))
+
 =====================================
 Variable Declaration With Function call Expression
 =====================================
@@ -316,32 +359,37 @@ template test(){
   var tmp3 = A(qwe.in, 2 + 10);
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (variable_declaration_statement
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (call_expression
+            (identifier))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (call_expression
             (identifier)
-            (call_expression
-              (identifier)))
-          (variable_declaration_statement
+            (argument_list
+              (int_literal)))))
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (call_expression
             (identifier)
-            (call_expression
-              (identifier)
-              (argument_list
-                (int_literal))))
-          (variable_declaration_statement
-            (identifier)
-            (call_expression
-              (identifier)
-              (argument_list
-                (member_expression
-                  (identifier)
-                  (property_identifier))
-                (binary_expression
-                  (int_literal)
-                  (int_literal))))))))
+            (argument_list
+              (member_expression
+                (identifier)
+                (property_identifier))
+              (binary_expression
+                (int_literal)
+                (int_literal)))))))))
+
 =====================================
 Signal Assignment
 =====================================
@@ -352,33 +400,38 @@ template test(){
   out[k] <-- (in >> k) & 1;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (signal_declaration_statement
-            (signal_visibility)
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (signal_declaration_statement
+        (signal_visibility)
+        (signal_declarator
+          (identifier)
+          (array_type
+            (identifier))))
+      (signal_declaration_statement
+        (signal_visibility)
+        (signal_declarator
+          (identifier)))
+      (signal_declaration_statement
+        (signal_visibility)
+        (signal_declarator
+          (identifier)))
+      (expression_statement
+        (assignment_expression
+          (array_access_expression
             (identifier)
-            (array_type
-              (identifier)))
-          (signal_declaration_statement
-            (signal_visibility)
             (identifier))
-          (signal_declaration_statement
-            (signal_visibility)
-            (identifier))
-          (expression_statement
-            (assignment_expression
-              (array_access_expression
-                (identifier)
-                (identifier))
+          (binary_expression
+            (parenthesized_expression
               (binary_expression
-                (parenthesized_expression
-                  (binary_expression
-                    (identifier)
-                    (identifier)))
-                (int_literal)))))))
+                (identifier)
+                (identifier)))
+            (int_literal)))))))
+
 =====================================
 Left assignment
 =====================================
@@ -388,23 +441,27 @@ template test(){
   in*out === 0;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (signal_declaration_statement
-            (signal_visibility)
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (signal_declaration_statement
+        (signal_visibility)
+        (signal_declarator
+          (identifier)))
+      (signal_declaration_statement
+        (signal_visibility)
+        (signal_declarator
+          (identifier)))
+      (expression_statement
+        (assignment_expression
+          (binary_expression
+            (identifier)
             (identifier))
-          (signal_declaration_statement
-            (signal_visibility)
-            (identifier))
-          (expression_statement
-            (assignment_expression
-              (binary_expression
-                (identifier)
-                (identifier))
-              (int_literal))))))
+          (int_literal))))))
+
 =====================================
 Increments, decrements
 =====================================
@@ -413,17 +470,19 @@ template test(){
   b--;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (expression_statement
-            (increment_expression
-              (identifier)))
-          (expression_statement
-            (decrement_expression
-              (identifier))))))
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (expression_statement
+        (increment_expression
+          (identifier)))
+      (expression_statement
+        (decrement_expression
+          (identifier))))))
+
 =====================================
 Complex Expressions with arrays
 =====================================
@@ -433,37 +492,39 @@ template test(){
   rangeChecks[i].in[1] <== end;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body
-          (expression_statement
-            (increment_expression
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body
+      (expression_statement
+        (increment_expression
+          (array_access_expression
+            (member_expression
+              (identifier)
+              (property_identifier))
+            (int_literal))))
+      (expression_statement
+        (decrement_expression
+          (array_access_expression
+            (member_expression
+              (identifier)
+              (property_identifier))
+            (binary_expression
+              (int_literal)
+              (identifier)))))
+      (expression_statement
+        (assignment_expression
+          (array_access_expression
+            (member_expression
               (array_access_expression
-                (member_expression
-                  (identifier)
-                  (property_identifier))
-                (int_literal))))
-          (expression_statement
-            (decrement_expression
-              (array_access_expression
-                (member_expression
-                  (identifier)
-                  (property_identifier))
-                (binary_expression
-                  (int_literal)
-                  (identifier)))))
-          (expression_statement
-            (assignment_expression
-              (array_access_expression
-                (member_expression
-                  (array_access_expression
-                    (identifier)
-                    (identifier))
-                  (property_identifier))
-                (int_literal))
-              (identifier))))))
+                (identifier)
+                (identifier))
+              (property_identifier))
+            (int_literal))
+          (identifier))))))
+
 =====================================
 Expression with array initialization
 =====================================
@@ -471,22 +532,25 @@ template FloatAdd(k, p) {
   var case_1_output[2] = [alpha_e, alpha_m];
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list
-          (parameter
-            (identifier))
-          (parameter
-            (identifier)))
-        (template_body
-          (variable_declaration_statement
+  (template_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier))
+      (parameter
+        (identifier)))
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (array_type
+            (int_literal))
+          (array_expression
             (identifier)
-            (array_type
-              (int_literal))
-            (array_expression
-              (identifier)
-              (identifier))))))
+            (identifier)))))))
+
 =====================================
 Expression with tuples, circom 2.0.1
 =====================================
@@ -495,35 +559,40 @@ template B(n){
     (a, b, c) = (1,a+1, A(2));
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list
-          (parameter
-            (identifier)))
-        (template_body
-          (variable_declaration_statement
+  (template_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)))
+    (template_body
+      (variable_declaration_statement
+        (variable_declarator
+          (identifier)
+          (int_literal))
+        (variable_declarator
+          (identifier)
+          (int_literal)))
+      (component_declaration_statement
+        (component_declarator
+          (identifier)))
+      (expression_statement
+        (assignment_expression
+          (tuple_expression
             (identifier)
-            (int_literal)
             (identifier)
-            (int_literal))
-          (component_declaration_statement
             (identifier))
-          (expression_statement
-            (assignment_expression
-              (tuple_expression
-                (identifier)
-                (identifier)
-                (identifier))
-              (tuple_expression
-                (int_literal)
-                (binary_expression
-                  (identifier)
-                  (int_literal))
-                (call_expression
-                  (identifier)
-                  (argument_list
-                    (int_literal)))))))))
+          (tuple_expression
+            (int_literal)
+            (binary_expression
+              (identifier)
+              (int_literal))
+            (call_expression
+              (identifier)
+              (argument_list
+                (int_literal)))))))))
+
 =====================================
 Expression with anonymous components, circom 2.0.1
 =====================================
@@ -531,24 +600,26 @@ template B(n){
    signal out <== A(n)(in[0],in[1]);
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list
-          (parameter
-            (identifier)))
-        (template_body
-          (signal_declaration_statement
+  (template_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)))
+    (template_body
+      (signal_declaration_statement
+        (signal_declarator
+          (identifier)
+          (call_expression
             (identifier)
-            (call_expression
-              (identifier)
+            (argument_list
+              (identifier))
+            (anonymous_inputs
               (argument_list
-                (identifier))
-              (anonymous_inputs
-                (argument_list
-                  (array_access_expression
-                    (identifier)
-                    (int_literal))
-                  (array_access_expression
-                    (identifier)
-                    (int_literal)))))))))
+                (array_access_expression
+                  (identifier)
+                  (int_literal))
+                (array_access_expression
+                  (identifier)
+                  (int_literal))))))))))

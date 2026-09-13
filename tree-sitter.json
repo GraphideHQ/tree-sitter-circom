@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "circom",
+      "camelcase": "Circom",
+      "scope": "source.circom",
+      "path": ".",
+      "file-types": [
+        "circom"
+      ],
+      "highlights": "queries/highlights.scm",
+      "locals": "queries/locals.scm",
+      "injection-regex": "^circom$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Circom grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Decurity"
+      },
+      {
+        "name": "Graphide"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/GraphideHQ/tree-sitter-circom"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}

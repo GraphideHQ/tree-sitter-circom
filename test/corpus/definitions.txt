@@ -1,0 +1,273 @@
+================================================================================
+Template modifiers
+================================================================================
+pragma custom_templates;
+template custom A() {
+}
+template parallel B(n) {
+}
+template extern_c C() {
+}
+template custom extern_c parallel D() {
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma_directive
+    (circom_custom_templates_token))
+  (template_definition
+    modifier: (custom)
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body))
+  (template_definition
+    modifier: (parallel)
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (template_body))
+  (template_definition
+    modifier: (extern_c)
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body))
+  (template_definition
+    modifier: (custom)
+    modifier: (extern_c)
+    modifier: (parallel)
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body)))
+
+================================================================================
+Template without a parameter list
+================================================================================
+template A {
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    body: (template_body)))
+
+================================================================================
+Template modifiers out of order
+:error
+================================================================================
+template parallel custom A() {
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Function definition
+================================================================================
+function f(a, b) {
+    return a + b;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier))
+      (parameter
+        name: (identifier)))
+    body: (function_body
+      (return_statement
+        value: (binary_expression
+          left: (identifier)
+          right: (identifier))))))
+
+================================================================================
+Function without a parameter list
+:error
+================================================================================
+function f {
+    return 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Main component with public signals
+================================================================================
+template A() {
+}
+component main {public [a, b]} = A(1, 0x2);
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body))
+  (main_component_definition
+    public_signals: (main_component_public_signals
+      (identifier)
+      (identifier))
+    value: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        argument: (int_literal)
+        argument: (int_literal)))))
+
+================================================================================
+Main component with any expression
+================================================================================
+component main = parallel A();
+--------------------------------------------------------------------------------
+
+(source_file
+  (main_component_definition
+    value: (parallel_expression
+      expression: (call_expression
+        function: (identifier)))))
+
+================================================================================
+Main component with an empty public list
+:error
+================================================================================
+component main {public []} = A();
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Trailing comma in the public list
+:error
+================================================================================
+component main {public [a,]} = A();
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Top-level order
+================================================================================
+pragma circom 2.2.0;
+pragma custom_templates;
+include "a.circom";
+include "b/c.circom";
+bus B() {
+}
+function f() {
+    return 1;
+}
+template A() {
+}
+component main = A();
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma_directive
+    (circom_pragma_token
+      version: (circom_version)))
+  (pragma_directive
+    (circom_custom_templates_token))
+  (include_directive
+    source: (string))
+  (include_directive
+    source: (string))
+  (bus_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (bus_body))
+  (function_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (function_body
+      (return_statement
+        value: (int_literal))))
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body))
+  (main_component_definition
+    value: (call_expression
+      function: (identifier))))
+
+================================================================================
+Include after a definition
+:error
+================================================================================
+template A() {
+}
+include "a.circom";
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Definition after main
+:error
+================================================================================
+component main = A();
+template A() {
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Two main components
+:error
+================================================================================
+component main = A();
+component main = A();
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Include paths
+================================================================================
+include "../node_modules/circomlib/circuits/poseidon.circom";
+include "circomlib/circuits/bitify.circom";
+include "/abs/path with spaces/x.circom";
+include "a/*inline comment*/b.circom";
+--------------------------------------------------------------------------------
+
+(source_file
+  (include_directive
+    source: (string))
+  (include_directive
+    source: (string))
+  (include_directive
+    source: (string))
+  (include_directive
+    source: (string)))
+
+================================================================================
+Include with single quotes
+:error
+================================================================================
+include 'a.circom';
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Double slash inside a string starts a comment
+:error
+================================================================================
+include "a//b.circom";
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Pragma with spaced version
+================================================================================
+pragma circom 2 . 1 . 6;
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma_directive
+    (circom_pragma_token
+      version: (circom_version))))
+
+================================================================================
+Pragma with a two-part version
+:error
+================================================================================
+pragma circom 2.1;
+--------------------------------------------------------------------------------
+

@@ -1,0 +1,259 @@
+================================================================================
+Bus definitions
+================================================================================
+bus Point() {
+    signal x;
+    signal y;
+}
+
+bus PointN(dim) {
+    signal {maxbit} x[dim];
+}
+
+bus Empty {
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (bus_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (bus_body
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)))))
+  (bus_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (bus_body
+      (signal_declaration_statement
+        tags: (signal_tags
+          (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (identifier))))))
+  (bus_definition
+    name: (identifier)
+    body: (bus_body)))
+
+================================================================================
+Buses inside buses
+================================================================================
+bus Line(dim) {
+    PointN(dim) start;
+    PointN(dim) end;
+}
+
+bus Figure(n, dim) {
+    Line(dim) side[n];
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (bus_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (bus_body
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier)
+          arguments: (argument_list
+            argument: (identifier)))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier)
+          arguments: (argument_list
+            argument: (identifier)))
+        declarator: (signal_declarator
+          name: (identifier)))))
+  (bus_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier))
+      (parameter
+        name: (identifier)))
+    body: (bus_body
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier)
+          arguments: (argument_list
+            argument: (identifier)))
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (identifier)))))))
+
+================================================================================
+Bus-typed signal headers
+================================================================================
+template T(n) {
+    input Point() p;
+    output Point() {edwards} q;
+    Point() input r;
+    Point(2) output {a, b} s[n][2];
+    input Point u;
+    Point v;
+    Point() w <== p;
+    Point() z <-- p;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (template_body
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        type: (bus_type
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        type: (bus_type
+          name: (identifier))
+        tags: (signal_tags
+          (identifier))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier))
+        direction: (signal_visibility)
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier)
+          arguments: (argument_list
+            argument: (int_literal)))
+        direction: (signal_visibility)
+        tags: (signal_tags
+          (identifier)
+          (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (identifier)
+            (int_literal))))
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        type: (bus_type
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (identifier)))
+      (signal_declaration_statement
+        type: (bus_type
+          name: (identifier))
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (identifier))))))
+
+================================================================================
+Bus fields, tags and tag values
+================================================================================
+template T() {
+    input Figure(3, 2) {well_defined} t;
+    signal c <== LessThan(t.side[0].start.x.maxbit)([1, t.side[1].end.x[0]]);
+    t.well_defined === 1;
+    q.x.maxbit = 3;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (signal_declaration_statement
+        direction: (signal_visibility)
+        type: (bus_type
+          name: (identifier)
+          arguments: (argument_list
+            argument: (int_literal)
+            argument: (int_literal)))
+        tags: (signal_tags
+          (identifier))
+        declarator: (signal_declarator
+          name: (identifier)))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              argument: (member_expression
+                object: (member_expression
+                  object: (member_expression
+                    object: (array_access_expression
+                      base: (member_expression
+                        object: (identifier)
+                        property: (property_identifier))
+                      index: (int_literal))
+                    property: (property_identifier))
+                  property: (property_identifier))
+                property: (property_identifier)))
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (array_expression
+                  (int_literal)
+                  (array_access_expression
+                    base: (member_expression
+                      object: (member_expression
+                        object: (array_access_expression
+                          base: (member_expression
+                            object: (identifier)
+                            property: (property_identifier))
+                          index: (int_literal))
+                        property: (property_identifier))
+                      property: (property_identifier))
+                    index: (int_literal))))))))
+      (expression_statement
+        (assignment_expression
+          left: (member_expression
+            object: (identifier)
+            property: (property_identifier))
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (member_expression
+            object: (member_expression
+              object: (identifier)
+              property: (property_identifier))
+            property: (property_identifier))
+          right: (int_literal))))))
+
+================================================================================
+Bus-typed tuple declaration
+:error
+================================================================================
+template T() {
+    input Point() (p, q);
+}
+--------------------------------------------------------------------------------
+

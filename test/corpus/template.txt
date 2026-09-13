@@ -4,26 +4,30 @@ Empty Template Definition
 template A(){
 }
 ---
- (source_file
-      (template_definition
-        (identifier)
-        (parameter_list)
-        (template_body)))
+
+(source_file
+  (template_definition
+    (identifier)
+    (parameter_list)
+    (template_body)))
+
 =====================================
 Empty Template with arguments
 =====================================
 template wrong (N, M) {
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list
-          (parameter
-            (identifier))
-          (parameter
-            (identifier)))
-        (template_body)))
+  (template_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier))
+      (parameter
+        (identifier)))
+    (template_body)))
+
 =====================================
 Simple Template with arguments
 =====================================
@@ -32,21 +36,25 @@ template wrong (N, M) {
     signal output out;
 }
 ---
+
 (source_file
-      (template_definition
-        (identifier)
-        (parameter_list
-          (parameter
-            (identifier))
-          (parameter
-            (identifier)))
-        (template_body
-          (signal_declaration_statement
-            (signal_visibility)
-            (identifier))
-          (signal_declaration_statement
-            (signal_visibility)
-            (identifier)))))
+  (template_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier))
+      (parameter
+        (identifier)))
+    (template_body
+      (signal_declaration_statement
+        (signal_visibility)
+        (signal_declarator
+          (identifier)))
+      (signal_declaration_statement
+        (signal_visibility)
+        (signal_declarator
+          (identifier))))))
+
 =====================================
 Parallel Template
 =====================================
@@ -57,54 +65,54 @@ template parallel name(N, M) {
     }
 }
 ---
+
 (source_file
-      (template_definition
-        (template_type
-          (parallel))
-        (identifier)
-        (parameter_list
-          (parameter
-            (identifier))
-          (parameter
-            (identifier)))
-        (template_body
-          (component_declaration_statement
-            (identifier)
-            (array_type
-              (identifier)))
-          (for_statement
-            (expression_statement
-              (assignment_expression
+  (template_definition
+    (parallel)
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier))
+      (parameter
+        (identifier)))
+    (template_body
+      (component_declaration_statement
+        (component_declarator
+          (identifier)
+          (array_type
+            (identifier))))
+      (for_statement
+        (assignment_expression
+          (identifier)
+          (int_literal))
+        (binary_expression
+          (identifier)
+          (identifier))
+        (increment_expression
+          (identifier))
+        (block_statement
+          (expression_statement
+            (assignment_expression
+              (array_access_expression
                 (identifier)
-                (int_literal)))
-            (expression_statement
-              (binary_expression
-                (identifier)
-                (identifier)))
-            (increment_expression
-              (identifier))
-            (block_statement
-              (expression_statement
-                (assignment_expression
-                  (array_access_expression
+                (identifier))
+              (parallel_expression
+                (call_expression
+                  (identifier)
+                  (argument_list
                     (identifier)
-                    (identifier))
-                  (call_expression
-                    (parallel)
-                    (identifier)
-                    (argument_list
-                      (identifier)
-                      (identifier))))))))))
+                    (identifier)))))))))))
+
 =====================================
 Custom Template
 =====================================
 template custom Example() {
 }
 ---
+
 (source_file
-      (template_definition
-        (template_type
-          (custom))
-        (identifier)
-        (parameter_list)
-        (template_body)))
+  (template_definition
+    (custom)
+    (identifier)
+    (parameter_list)
+    (template_body)))

@@ -1,0 +1,492 @@
+================================================================================
+Operator precedence tiers
+================================================================================
+template T() {
+    var a = x || y && z == w | v ^ u & t << s + r * q ** p;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (identifier)
+            right: (binary_expression
+              left: (identifier)
+              right: (binary_expression
+                left: (identifier)
+                right: (binary_expression
+                  left: (identifier)
+                  right: (binary_expression
+                    left: (identifier)
+                    right: (binary_expression
+                      left: (identifier)
+                      right: (binary_expression
+                        left: (identifier)
+                        right: (binary_expression
+                          left: (identifier)
+                          right: (binary_expression
+                            left: (identifier)
+                            right: (binary_expression
+                              left: (identifier)
+                              right: (identifier))))))))))))))))
+
+================================================================================
+Left-associative power and integer division
+================================================================================
+template T() {
+    var a = x ** y ** z;
+    var b = x \ y % z;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (binary_expression
+              left: (identifier)
+              right: (identifier))
+            right: (identifier))))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (binary_expression
+              left: (identifier)
+              right: (identifier))
+            right: (identifier)))))))
+
+================================================================================
+Prefix operators bind tighter than power
+================================================================================
+template T() {
+    var a = -x ** 2;
+    var b = x ** -2;
+    var c = !f(x) && ~y[0];
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (unary_expression
+              argument: (identifier))
+            right: (int_literal))))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (identifier)
+            right: (unary_expression
+              argument: (int_literal)))))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (unary_expression
+              argument: (call_expression
+                function: (identifier)
+                arguments: (argument_list
+                  argument: (identifier))))
+            right: (unary_expression
+              argument: (array_access_expression
+                base: (identifier)
+                index: (int_literal)))))))))
+
+================================================================================
+Prefix operator applied twice
+:error
+================================================================================
+template T() {
+    var a = - -x;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Unary plus
+:error
+================================================================================
+template T() {
+    var a = +1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Ternary with binary branches
+================================================================================
+template T() {
+    var a = x > 0 ? y + 1 : z * 2;
+    var b = x ? y : (z ? 1 : 2);
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (ternary_expression
+            condition: (binary_expression
+              left: (identifier)
+              right: (int_literal))
+            consequence: (binary_expression
+              left: (identifier)
+              right: (int_literal))
+            alternative: (binary_expression
+              left: (identifier)
+              right: (int_literal)))))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (ternary_expression
+            condition: (identifier)
+            consequence: (identifier)
+            alternative: (parenthesized_expression
+              (ternary_expression
+                condition: (identifier)
+                consequence: (int_literal)
+                alternative: (int_literal)))))))))
+
+================================================================================
+Nested ternary without parentheses
+:error
+================================================================================
+template T() {
+    var a = x ? y : z ? 1 : 2;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Comparison chains
+================================================================================
+template T() {
+    var a = x < y < z;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (binary_expression
+            left: (binary_expression
+              left: (identifier)
+              right: (identifier))
+            right: (identifier)))))))
+
+================================================================================
+Member and array access chains
+================================================================================
+template T() {
+    c[i][j].out[k].x <== p.x[0];
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (expression_statement
+        (assignment_expression
+          left: (member_expression
+            object: (array_access_expression
+              base: (member_expression
+                object: (array_access_expression
+                  base: (array_access_expression
+                    base: (identifier)
+                    index: (identifier))
+                  index: (identifier))
+                property: (property_identifier))
+              index: (identifier))
+            property: (property_identifier))
+          right: (array_access_expression
+            base: (member_expression
+              object: (identifier)
+              property: (property_identifier))
+            index: (int_literal)))))))
+
+================================================================================
+Index on a call result
+:error
+================================================================================
+template T() {
+    var a = f()[0];
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Member access on an anonymous component
+:error
+================================================================================
+template T() {
+    signal o <== A()().out;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Call expressions and anonymous components
+================================================================================
+template T() {
+    var a = f();
+    var b = g(1, x);
+    signal c <== Mux()(x);
+    signal d <== Poseidon(2)([x, y]);
+    signal e <== A(1)(in <== x, sel <-- y, k = 3);
+    signal f <== B()();
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier))))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              argument: (int_literal)
+              argument: (identifier)))))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier)
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (identifier))))))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              argument: (int_literal))
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (array_expression
+                  (identifier)
+                  (identifier)))))))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              argument: (int_literal))
+            inputs: (anonymous_inputs
+              input: (named_input
+                name: (identifier)
+                value: (identifier))
+              input: (named_input
+                name: (identifier)
+                value: (identifier))
+              input: (named_input
+                name: (identifier)
+                value: (int_literal))))))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (call_expression
+            function: (identifier)
+            inputs: (anonymous_inputs)))))))
+
+================================================================================
+Anonymous component mixing named and positional inputs
+:error
+================================================================================
+template T() {
+    signal c <== A()(a <== x, y);
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Parallel expression
+================================================================================
+template T() {
+    component c = parallel A();
+    signal o <== parallel B(1)(x);
+    var v = parallel 1 + 2;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (component_declaration_statement
+        declarator: (component_declarator
+          name: (identifier)
+          value: (parallel_expression
+            expression: (call_expression
+              function: (identifier)))))
+      (signal_declaration_statement
+        declarator: (signal_declarator
+          name: (identifier)
+          value: (parallel_expression
+            expression: (call_expression
+              function: (identifier)
+              arguments: (argument_list
+                argument: (int_literal))
+              inputs: (anonymous_inputs
+                (argument_list
+                  argument: (identifier)))))))
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (parallel_expression
+            expression: (binary_expression
+              left: (int_literal)
+              right: (int_literal))))))))
+
+================================================================================
+Parallel applied twice
+:error
+================================================================================
+template T() {
+    component c = parallel parallel A();
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Tuples and placeholders in assignments
+================================================================================
+template T() {
+    (a, b) <== Two()(x);
+    (_, c) <== Two()(x);
+    _ <== One()(x);
+    ((d, e), f) = ((1, 2), 3);
+    (g, h) = (1, 2);
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (expression_statement
+        (assignment_expression
+          left: (tuple_expression
+            (identifier)
+            (identifier))
+          right: (call_expression
+            function: (identifier)
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (identifier))))))
+      (expression_statement
+        (assignment_expression
+          left: (tuple_expression
+            (placeholder)
+            (identifier))
+          right: (call_expression
+            function: (identifier)
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (identifier))))))
+      (expression_statement
+        (assignment_expression
+          left: (placeholder)
+          right: (call_expression
+            function: (identifier)
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (identifier))))))
+      (expression_statement
+        (assignment_expression
+          left: (tuple_expression
+            (tuple_expression
+              (identifier)
+              (identifier))
+            (identifier))
+          right: (tuple_expression
+            (tuple_expression
+              (int_literal)
+              (int_literal))
+            (int_literal))))
+      (expression_statement
+        (assignment_expression
+          left: (tuple_expression
+            (identifier)
+            (identifier))
+          right: (tuple_expression
+            (int_literal)
+            (int_literal)))))))
+
+================================================================================
+Array literals
+================================================================================
+template T() {
+    var a[2][2] = [[1, 2], [3, x]];
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          dimensions: (array_type
+            (int_literal)
+            (int_literal))
+          value: (array_expression
+            (array_expression
+              (int_literal)
+              (int_literal))
+            (array_expression
+              (int_literal)
+              (identifier))))))))
+
+================================================================================
+Empty array literal
+:error
+================================================================================
+template T() {
+    var a = [];
+}
+--------------------------------------------------------------------------------
+

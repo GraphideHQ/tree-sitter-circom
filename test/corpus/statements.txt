@@ -1,0 +1,522 @@
+================================================================================
+Assignment and constraint operators
+================================================================================
+template T() {
+    a = 1;
+    b <-- 2;
+    c <== 3;
+    4 --> d;
+    5 ==> e;
+    f === g * h;
+    x ? y : z ==> w;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (int_literal)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (int_literal)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (binary_expression
+            left: (identifier)
+            right: (identifier))))
+      (expression_statement
+        (assignment_expression
+          left: (ternary_expression
+            condition: (identifier)
+            consequence: (identifier)
+            alternative: (identifier))
+          right: (identifier))))))
+
+================================================================================
+Compound assignment operators
+================================================================================
+template T() {
+    a += 1; a -= 1; a *= 2; a /= 2; a \= 2; a %= 5; a **= 2;
+    a <<= 1; a >>= 1; a &= 3; a |= 1; a ^= 1;
+    b[i].c += 1;
+    a++;
+    b[0]--;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (int_literal)))
+      (expression_statement
+        (assignment_expression
+          left: (member_expression
+            object: (array_access_expression
+              base: (identifier)
+              index: (identifier))
+            property: (property_identifier))
+          right: (int_literal)))
+      (expression_statement
+        (increment_expression
+          argument: (identifier)))
+      (expression_statement
+        (decrement_expression
+          argument: (array_access_expression
+            base: (identifier)
+            index: (int_literal)))))))
+
+================================================================================
+Compound assignment on a tuple
+:error
+================================================================================
+template T() {
+    (a, b) += 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Prefix increment
+:error
+================================================================================
+template T() {
+    ++i;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Increment inside an expression
+:error
+================================================================================
+template T() {
+    var j = i++;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Chained assignment
+:error
+================================================================================
+template T() {
+    i = j = 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Anonymous component statements
+================================================================================
+template T() {
+    Check()(x);
+    (Check()(x));
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (expression_statement
+        (call_expression
+          function: (identifier)
+          inputs: (anonymous_inputs
+            (argument_list
+              argument: (identifier)))))
+      (expression_statement
+        (parenthesized_expression
+          (call_expression
+            function: (identifier)
+            inputs: (anonymous_inputs
+              (argument_list
+                argument: (identifier)))))))))
+
+================================================================================
+Function call statement
+:error
+================================================================================
+template T() {
+    f(x);
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Log statements
+================================================================================
+template T() {
+    log("a =", a, "b", 1 + 2);
+    log();
+    log("only a string");
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (template_body
+      (log_statement
+        argument: (string)
+        argument: (identifier)
+        argument: (string)
+        argument: (binary_expression
+          left: (int_literal)
+          right: (int_literal)))
+      (log_statement)
+      (log_statement
+        argument: (string)))))
+
+================================================================================
+Trailing comma in log
+:error
+================================================================================
+template T() {
+    log(a,);
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Assert statements
+================================================================================
+function f(n) {
+    assert(n > 0 && n < 254);
+    return n;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (function_body
+      (assert_statement
+        condition: (binary_expression
+          left: (binary_expression
+            left: (identifier)
+            right: (int_literal))
+          right: (binary_expression
+            left: (identifier)
+            right: (int_literal))))
+      (return_statement
+        value: (identifier)))))
+
+================================================================================
+Assert with two arguments
+:error
+================================================================================
+function f(n) {
+    assert(n > 0, "positive");
+    return n;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+For loop initializers
+================================================================================
+template T(n) {
+    for (var i = 0; i < n; i++) {
+    }
+    for (i = 0; i < n; i += 2) x[i] <== 0;
+    for (signal s; 1 < 0; s++) {
+    }
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (template_body
+      (for_statement
+        initializer: (variable_declaration_statement
+          declarator: (variable_declarator
+            name: (identifier)
+            value: (int_literal)))
+        condition: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        update: (increment_expression
+          argument: (identifier))
+        body: (block_statement))
+      (for_statement
+        initializer: (assignment_expression
+          left: (identifier)
+          right: (int_literal))
+        condition: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        update: (assignment_expression
+          left: (identifier)
+          right: (int_literal))
+        body: (expression_statement
+          (assignment_expression
+            left: (array_access_expression
+              base: (identifier)
+              index: (identifier))
+            right: (int_literal))))
+      (for_statement
+        initializer: (signal_declaration_statement
+          declarator: (signal_declarator
+            name: (identifier)))
+        condition: (binary_expression
+          left: (int_literal)
+          right: (int_literal))
+        update: (increment_expression
+          argument: (identifier))
+        body: (block_statement)))))
+
+================================================================================
+For loop without an initializer
+:error
+================================================================================
+template T(n) {
+    for (; i < n; i++) {
+    }
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+For loop body cannot be an unbraced if
+:error
+================================================================================
+template T(n) {
+    for (var i = 0; i < n; i++) if (i == 0) x <== 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+While loop
+================================================================================
+function f(n) {
+    var i = 0;
+    while (i < n) i++;
+    return i;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (function_body
+      (variable_declaration_statement
+        declarator: (variable_declarator
+          name: (identifier)
+          value: (int_literal)))
+      (while_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        body: (expression_statement
+          (increment_expression
+            argument: (identifier))))
+      (return_statement
+        value: (identifier)))))
+
+================================================================================
+If with else if and dangling else
+================================================================================
+template T(n) {
+    if (n == 0) {
+        signal s;
+    } else if (n == 1) x <== 1;
+    else {
+        x <== 2;
+    }
+    if (a) if (b) c++; else c--;
+    if (n) for (var i = 0; i < n; i++) x++;
+}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        name: (identifier)))
+    body: (template_body
+      (if_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (int_literal))
+        consequence: (block_statement
+          (signal_declaration_statement
+            declarator: (signal_declarator
+              name: (identifier))))
+        alternative: (if_statement
+          condition: (binary_expression
+            left: (identifier)
+            right: (int_literal))
+          consequence: (expression_statement
+            (assignment_expression
+              left: (identifier)
+              right: (int_literal)))
+          alternative: (block_statement
+            (expression_statement
+              (assignment_expression
+                left: (identifier)
+                right: (int_literal))))))
+      (if_statement
+        condition: (identifier)
+        consequence: (if_statement
+          condition: (identifier)
+          consequence: (expression_statement
+            (increment_expression
+              argument: (identifier)))
+          alternative: (expression_statement
+            (decrement_expression
+              argument: (identifier)))))
+      (if_statement
+        condition: (identifier)
+        consequence: (for_statement
+          initializer: (variable_declaration_statement
+            declarator: (variable_declarator
+              name: (identifier)
+              value: (int_literal)))
+          condition: (binary_expression
+            left: (identifier)
+            right: (identifier))
+          update: (increment_expression
+            argument: (identifier))
+          body: (expression_statement
+            (increment_expression
+              argument: (identifier))))))))
+
+================================================================================
+Declaration as an unbraced if body
+:error
+================================================================================
+template T(n) {
+    if (n == 1) var x = 1;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Empty statement
+:error
+================================================================================
+template T() {
+    ;
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Comments in odd places
+================================================================================
+pragma /* a */ circom /* b */ 2.2.0; // c
+/* d */ template /* e */ T /* f */ ( /* g */ ) {
+    var /* h */ x /**/ = /***/ 1 // i
+    ;
+    log("/* not a comment in the compiler either */");
+} // end
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma_directive
+    (comment)
+    (circom_pragma_token
+      (comment)
+      version: (circom_version)))
+  (comment)
+  (comment)
+  (template_definition
+    (comment)
+    name: (identifier)
+    (comment)
+    parameters: (parameter_list
+      (comment))
+    body: (template_body
+      (variable_declaration_statement
+        (comment)
+        declarator: (variable_declarator
+          name: (identifier)
+          (comment)
+          (comment)
+          value: (int_literal))
+        (comment))
+      (log_statement
+        argument: (string))))
+  (comment))
