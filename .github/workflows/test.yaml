@@ -1,6 +1,3 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: Test grammar
 
 on:
@@ -9,26 +6,40 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  # The committed src/ was generated with this CLI at ABI 15. Keep them in step.
+  TREE_SITTER_CLI_VERSION: 0.26.8
+
 jobs:
-  build:
-
+  grammar:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: npm install tree-sitter-cli -g
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install tree-sitter CLI
+        run: npm install -g tree-sitter-cli@${TREE_SITTER_CLI_VERSION}
+      - name: Regenerate the parser
+        run: tree-sitter generate --abi 15
+      - name: Committed parser is up to date
+        run: git diff --exit-code -- src/
+      - name: Corpus tests
+        run: tree-sitter test
+      - name: Queries compile
+        run: |
+          printf 'template T() {}\n' > /tmp/t.circom
+          tree-sitter query queries/highlights.scm /tmp/t.circom > /dev/null
+          tree-sitter query queries/locals.scm /tmp/t.circom > /dev/null
+      - name: Real-world parse rate
+        run: script/parse-corpus.sh --verbose
 
-    - name: Generate tree-sitter parser
-      run: tree-sitter generate
-
-    - name: Running tests
-      run: tree-sitter test
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Go binding test
+        run: go test ./bindings/go/...
