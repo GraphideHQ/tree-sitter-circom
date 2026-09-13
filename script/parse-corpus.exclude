@@ -1,0 +1,10 @@
+# Files the official circom compiler (2.2.x) rejects at parse time.
+# One path per line, relative to the corpus directory; text after # is ignored.
+
+# Trailing comma in the main component's public list (`proofType,\n]}`):
+# compiler error P1012 UnrecognizedToken "]".
+iden3-circuits/circuits/credentialAtomicQueryV3Universal-16-16-64.circom
+
+# Not circom source: a JSON witness-input file that happens to use the
+# .circom extension. Compiler error P1012 UnrecognizedToken "{" at 1:1.
+circom-pairing/scripts/linefunctionequal/input_linefunctionequal_35_11.circom
