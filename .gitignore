@@ -12,7 +12,7 @@ node_modules/
 .build/
 
 # Go artifacts
-go.sum
+
 _obj/
 
 # Python artifacts
@@ -36,3 +36,4 @@ dist/
 *.wasm
 *.obj
 *.o
+.corpus/
