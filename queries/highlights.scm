@@ -21,25 +21,36 @@
 ; -----------
 
 (function_definition
-  name:  (identifier) @function)
+  name: (identifier) @function)
 
 (template_definition
-  name:  (identifier) @function)
+  name: (identifier) @function)
+
+(bus_definition
+  name: (identifier) @type)
+
+(bus_type
+  name: (identifier) @type)
 
 ; Use contructor coloring for special functions
 (main_component_definition) @constructor
 
 ; Invocations
 
-(call_expression . (identifier) @function)
+(call_expression
+  function: (identifier) @function)
 
 ; Function parameters
 (parameter name: (identifier) @variable.parameter)
 
-
 ; Members
 (member_expression property: (property_identifier) @property)
 
+(named_input name: (identifier) @property)
+
+(signal_tags (identifier) @attribute)
+
+(placeholder) @variable.builtin
 
 ; Tokens
 ; -------
@@ -47,14 +58,24 @@
 ; Keywords
 
 [
+ "pragma"
+ "circom"
+ (circom_custom_templates_token)
  "public"
  "signal"
  "var"
  "include"
  "input"
  "output"
- "public"
  "component"
+ "main"
+ "bus"
+ "parallel"
+ "log"
+ "assert"
+ (custom)
+ (extern_c)
+ (parallel)
 ] @keyword
 
 [
@@ -76,7 +97,6 @@
   "template"
 ] @keyword.function
 
-
 ; Punctuation
 
 [
@@ -88,12 +108,11 @@
   "}"
 ] @punctuation.bracket
 
-
 [
   "."
   ","
+  ";"
 ] @punctuation.delimiter
-
 
 ; Operators
 
@@ -109,6 +128,7 @@
   "-"
   "*"
   "/"
+  "\\"
   "%"
   "**"
   "<"
@@ -119,10 +139,23 @@
   ">"
   "!"
   "~"
-  "-"
-  "+"
   "++"
   "--"
+  "?"
+  ":"
+  "="
+  "+="
+  "-="
+  "*="
+  "/="
+  "\\="
+  "%="
+  "**="
+  "<<="
+  ">>="
+  "&="
+  "|="
+  "^="
 ] @operator
 
 [
