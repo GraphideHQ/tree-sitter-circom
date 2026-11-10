@@ -1,3 +1,18 @@
+# Graphide CI runs this workflow's Linux jobs on one of two runner labels:
+#
+#   runs-on: graphide        The CI lane: tests, builds, lint, type checks, docs
+#                            builds. Graphide may speed these jobs up (warm
+#                            machines, caches, its proven changes); GitHub still
+#                            decides pass or fail.
+#   runs-on: graphide-plain  The plain lane: deploys, releases, publishing, cloud
+#                            logins, jobs with environment:, scheduled bots and
+#                            issue or pull request automation. A clean machine that
+#                            runs your steps exactly as written, nothing added.
+#
+# For a new job: graphide if it only checks the code, graphide-plain if it
+# changes anything outside the run (ships, publishes, logs in to a cloud, posts
+# or edits issues and pull requests). Unsure? graphide-plain is always safe.
+# Neither label names a size: Graphide sizes the machine. https://graphide.com/docs/ci/
 name: Test grammar
 
 on:
@@ -13,7 +28,7 @@ env:
 
 jobs:
   grammar:
-    runs-on: ubuntu-latest
+    runs-on: graphide
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,7 +51,7 @@ jobs:
         run: script/parse-corpus.sh --verbose
 
   go:
-    runs-on: ubuntu-latest
+    runs-on: graphide
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
